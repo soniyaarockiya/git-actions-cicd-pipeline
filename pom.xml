@@ -49,7 +49,7 @@
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>4.4.0</muleVersion>
-						<username>${anypoint.username}</username>
+						<username>${anypoint.userName}</username>
 						<password>${anypoint.password}</password>
 						<applicationName>test-ci-cd</applicationName>
 						<environment>Sandbox</environment>
