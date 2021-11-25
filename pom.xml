@@ -37,9 +37,13 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
+				<!-- <groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>3.5.3</version>
+				<extensions>true</extensions> -->
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
 					<cloudHubDeployment>
@@ -53,20 +57,10 @@
 						<workers>1</workers>
 						<workerType>MICRO</workerType>
 						<objectStoreV2>true</objectStoreV2>
-						<!-- <properties>
-							<key>value</key>
-						</properties> -->
+						<!-- <properties> <key>value</key> </properties> -->
 					</cloudHubDeployment>
 				</configuration>
 			</plugin>
-
-
-
-
-
-
-
-
 		</plugins>
 	</build>
 
@@ -101,6 +95,17 @@
 	</repositories>
 
 	<pluginRepositories>
+		<!-- <pluginRepository>
+			<id>mulesoft-ee-release</id>
+			<url>https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository> -->
 		<pluginRepository>
 			<id>mulesoft-releases</id>
 			<name>MuleSoft Releases Repository</name>
