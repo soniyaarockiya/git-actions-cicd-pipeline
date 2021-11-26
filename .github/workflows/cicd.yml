@@ -22,7 +22,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Test Coverage
-      run: mvn test
+      run: mvn -B test --file pom.xml
       
     - name: Build
       run: mvn -B package --file pom.xml
