@@ -43,7 +43,9 @@ jobs:
 #           path: target/*.jar
 
   deploy:
-#     needs: build
+    env:
+      BRANCH_NUAME: RANDOMNAME
+      #     needs: build
     runs-on: ubuntu-latest
     steps:    
 #     - uses: actions/checkout@v2
@@ -65,7 +67,7 @@ jobs:
         
     - name: print env
       shell: bash
-      run: echo "ENVIRONMENT IS .... ${BRANCH_NAME}"
+      run: echo "ENVIRONMENT IS .... ${{env.BRANCH_NUAME}}"
 
       
       
