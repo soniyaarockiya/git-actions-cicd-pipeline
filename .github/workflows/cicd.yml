@@ -71,7 +71,7 @@ jobs:
         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP} " >> $GITHUB_ENV
         
     - name: Set runtime properties for QA branch
-      if: ${{ env.BRANCH_NAME == 'QA' }}
+      if: ${{ env.BRANCH_NAME == 'main' }}
 #       run: |
 #         echo "MULE_ENV = QA " >> $GITHUB_ENV
 #         echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
