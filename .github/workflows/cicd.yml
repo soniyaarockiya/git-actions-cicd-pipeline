@@ -1,15 +1,19 @@
 name: Java CI with Maven
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+    
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    
+#     Checkout nodes, as in give access to your code 
     - uses: actions/checkout@v2
     - uses: actions/cache@v1
       with:
@@ -17,14 +21,15 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+          
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Test Coverage
-      run: mvn -B test --file pom.xml
+#     - name: Test Coverage
+#       run: mvn -B test --file pom.xml
       
-    - name: Build
+    - name: Package 
       run: mvn -B package --file pom.xml
     - name: Stamp artifact file name with commit hash
       run: |
@@ -51,10 +56,25 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: artifacts
-    - name: Deploy to CloudHub
-      env:
-        USERNAME: ${{ secrets.username }}
-        PASSWORD: ${{ secrets.password }}
+        
+    - name: get branch details
+      run: echo "BRANCH_NAME = $(echo ${GITHUB_BASE_REF})" >> $GITHUB_ENV
+      
+    - name: Set runtime properties according to branch name
+      if: ${{ env.BRANCH_NAME == 'develop' }}
       run: |
-        artifactName=$(ls *.jar | head -1)
-        mvn mule:deploy -Dmule.artifact=$artifactName -Danypoint.userName="$USERNAME" -Danypoint.password="$PASSWORD"
+        echo "MULE_ENV = DEV " >> $GITHUB_ENV
+        echo "DEPLOYMNET_ENV = Develop " >> $GITHUB_ENV
+        echo "BUSINESS_GROUP = ${{secrets.BUSINESS_GROUP}}"
+        echo ""
+        echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP} " >> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP} " >> $GITHUB_ENV
+      
+#     - name: Deploy to CloudHub
+#       env:
+        
+#         USERNAME: ${{ secrets.username }}
+#         PASSWORD: ${{ secrets.password }}
+#       run: |
+#         artifactName=$(ls *.jar | head -1)
+#         mvn mule:deploy -Dmule.artifact=$artifactName -Danypoint.userName="$USERNAME" -Danypoint.password="$PASSWORD"
