@@ -9,6 +9,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	</http:listener-config>
 	<flow name="git-actions-cici-pipelineFlow" doc:id="54d65061-def1-426e-be4c-9947973631b2" >
 		<http:listener doc:name="Listener" doc:id="76feb7b8-7a73-41e6-a480-c3dfa87896b8" config-ref="HTTP_Listener_config" path="/hello"/>
-		<set-payload value='#["hello world"]' doc:name="Set Payload" doc:id="d7819eb6-5a02-403b-9cc6-b3bfcc9279ca" />
+		<set-payload value='#["hello world Soniya"]' doc:name="Set Payload" doc:id="d7819eb6-5a02-403b-9cc6-b3bfcc9279ca" />
 	</flow>
 </mule>
