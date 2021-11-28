@@ -88,7 +88,7 @@ jobs:
             echo "ANYPOINT_PLATFORM_CLIENT_SECRET = clientsecret// " >> $GITHUB_ENV
 
     - name: print the values
-      run: echo   " $MULE_ENV $MULE_KEY $DEPLOYMNET_ENV $BUSINESS_GROUP_ID $ANYPOINT_PLATFORM_CLIENT_ID $ANYPOINT_PLATFORM_CLIENT_SECRET "
+      run: echo   " ${{env.MULE_ENV}} ${{env.MULE_KEY}} ${{env.DEPLOYMNET_ENV}} ${{env.BUSINESS_GROUP_ID}} ${{env.ANYPOINT_PLATFORM_CLIENT_ID}} ${{env.ANYPOINT_PLATFORM_CLIENT_SECRET}} "
       
 #     - name: Deploy to CloudHub
 #       env:
