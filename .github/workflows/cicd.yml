@@ -60,15 +60,35 @@ jobs:
     - name: get branch details
       run: echo "BRANCH_NAME = $(echo ${GITHUB_BASE_REF})" >> $GITHUB_ENV
       
-    - name: Set runtime properties according to branch name
+    - name: Set runtime properties for develop branch
       if: ${{ env.BRANCH_NAME == 'develop' }}
       run: |
         echo "MULE_ENV = DEV " >> $GITHUB_ENV
-        echo "DEPLOYMNET_ENV = Develop " >> $GITHUB_ENV
-        echo "BUSINESS_GROUP = ${{secrets.BUSINESS_GROUP}}"
-        echo ""
+        echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
+        echo "DEPLOYMNET_ENV = Development " >> $GITHUB_ENV
+        echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}"
         echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP} " >> $GITHUB_ENV
         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP} " >> $GITHUB_ENV
+        
+    - name: Set runtime properties for QA branch
+      if: ${{ env.BRANCH_NAME == 'QA' }}
+#       run: |
+#         echo "MULE_ENV = QA " >> $GITHUB_ENV
+#         echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
+#         echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
+#         echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
+#         echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
+#         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
+      run: |
+            echo "MULE_ENV = QA// " >> $GITHUB_ENV
+            echo "MULE_KEY = mulekey// " >> $GITHUB_ENV
+            echo "DEPLOYMNET_ENV = QA// " >> $GITHUB_ENV
+            echo "BUSINESS_GROUP_ID = business group id//" >> $GITHUB_ENV
+            echo "ANYPOINT_PLATFORM_CLIENT_ID = clientid// " >> $GITHUB_ENV
+            echo "ANYPOINT_PLATFORM_CLIENT_SECRET = clientsecret// " >> $GITHUB_ENV
+
+    - name: print the values
+      run: echo   " $MULE_ENV $MULE_KEY $DEPLOYMNET_ENV $BUSINESS_GROUP_ID $ANYPOINT_PLATFORM_CLIENT_ID $ANYPOINT_PLATFORM_CLIENT_SECRET "
       
 #     - name: Deploy to CloudHub
 #       env:
