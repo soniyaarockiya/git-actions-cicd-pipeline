@@ -62,8 +62,10 @@ jobs:
       
       run: |
         echo "BRANCH_NAME = $(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-        echo "ENVIRONMENT IS .... ${{BRANCH_NAME}}"
-      
+    - name: print env
+      shell: bash
+      run: echo "ENVIRONMENT IS .... ${{env.BRANCH_NAME}}"
+
       
       
     - name: Set runtime properties for develop branch
