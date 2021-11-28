@@ -58,6 +58,7 @@ jobs:
 #         name: artifacts
         
     - name: get branch details
+      shell: bash
       
       run: |
         echo "BRANCH_NAME = $(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
@@ -96,6 +97,8 @@ jobs:
               echo "ANYPOINT_PLATFORM_CLIENT_SECRET = clientsecret// " >> $GITHUB_ENV
 
     - name: print the values
+      shell: bash
+
       run : echo '${{env.BRANCH_NAME}}'
 #       run: echo   " ${{env.MULE_ENV}} ${{env.MULE_KEY}} ${{env.DEPLOYMNET_ENV}} ${{env.BUSINESS_GROUP_ID}} ${{env.ANYPOINT_PLATFORM_CLIENT_ID}} ${{env.ANYPOINT_PLATFORM_CLIENT_SECRET}} "
       
