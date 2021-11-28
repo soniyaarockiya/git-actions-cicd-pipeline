@@ -9,8 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+#   build:
+#     runs-on: ubuntu-latest
 #     steps:
     
 # #     Checkout nodes, as in give access to your code 
@@ -43,7 +43,7 @@ jobs:
 #           path: target/*.jar
 
   deploy:
-    needs: build
+#     needs: build
     runs-on: ubuntu-latest
     steps:    
 #     - uses: actions/checkout@v2
