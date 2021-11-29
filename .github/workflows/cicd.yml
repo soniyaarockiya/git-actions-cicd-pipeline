@@ -50,9 +50,9 @@ jobs:
       BUSINESS_GROUP_ID: ${{env.BUSINESS_GROUP_ID}}
       ANYPOINT_PLATFORM_CLIENT_ID: ${{env.ANYPOINT_PLATFORM_CLIENT_ID}}
       ANYPOINT_PLATFORM_CLIENT_SECRET: ${{env.ANYPOINT_PLATFORM_CLIENT_SECRET}}
+      BRANCH_NAME: ${{env.BRANCH_NAME}}
 
-    env:
-      BRANCH_NUAME: main
+    
       #     needs: build
     runs-on: ubuntu-latest
     steps:    
