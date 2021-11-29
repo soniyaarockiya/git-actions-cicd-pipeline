@@ -77,19 +77,19 @@ jobs:
       run: |
         echo "::set-output name=MULE_ENV::DEV"
         echo "::set-output name=MULE_KEY::${{secrets.MULE_KEY}}" 
-        echo "::set-output name=DEPLOYMNET_ENV::Development" 
+        echo "::set-output name=DEPLOYMENT_ENV::Sandbox" 
         echo "::set-output name=BUSINESS_GROUP_ID::${{secrets.BUSINESS_GROUP_ID}}"
         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::${secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP}"
         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP}" 
         
     - name:  Set runtime properties for qa branch
-#       id: set_runtime_properties_qa
+      id: set_runtime_properties_qa
       if: ${{ steps.get_branch_name.outputs.BRANCH_NAME == 'main' }}
       shell: bash
       run: |
         echo "::set-output name=MULE_ENV::QA/" 
         echo "::set-output name=MULE_KEY::mulekey//" 
-        echo "::set-output name=DEPLOYMNET_ENV::QA// " 
+        echo "::set-output name=DEPLOYMENT_ENV::QA// " 
         echo "::set-output name=BUSINESS_GROUP_ID::business group id//"
         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::clientid// " 
         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::clientsecret// " 
@@ -104,15 +104,18 @@ jobs:
 #         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
       
 
-    - name: print the values
-      id: print_runtime_properties
-      shell: bash
-      run: |
-        echo  "Values are ${{steps.outputs.ANYPOINT_PLATFORM_CLIENT_SECRET}}"
       
-#     - name: Deploy to CloudHub
-#       env:
-#         USERNAME: ${{ secrets.username }}
-#         PASSWORD: ${{ secrets.password }}
-#       run: |
-#         echo 
+    - name: Deploy to CloudHub
+      if: ${{ steps.get_branch_name.outputs.BRANCH_NAME == 'develop' }}
+      env:
+        USERNAME: ${{ secrets.username }}
+        PASSWORD: ${{ secrets.password }}
+        MULE_ENV: ${{steps.set_runtime_properties_dev.outputs.MULE_ENV}}
+        MULE_KEY: ${{steps.set_runtime_properties_dev.outputs.MULE_KEY}}
+        DEPLOYMENT_ENV: ${{steps.set_runtime_properties_dev.outputs.DEPLOYMENT_ENV}}
+        BUSINESS_GROUP_ID: ${{steps.set_runtime_properties_dev.outputs.BUSINESS_GROUP_ID}}
+        ANYPOINT_PLATFORM_CLIENT_ID: ${{steps.set_runtime_properties_dev.outputs.ANYPOINT_PLATFORM_CLIENT_ID}}
+        ANYPOINT_PLATFORM_CLIENT_SECRET: ${{steps.set_runtime_properties_dev.outputs.ANYPOINT_PLATFORM_CLIENT_ID}}
+      run: |
+         artifactName=$(ls *.jar | head -1)
+          mvn mule:deploy -Dmule.artifact=$artifactName -Dusername="$USERNAME" -Dpassword="$PASSWORD" -DbusinessgroupId="$BUSINESS_GROUP_ID" -Danypoint.platform.client_id="$ANYPOINT_PLATFORM_CLIENT_ID" -Danypoint.platform.client_secret="$ANYPOINT_PLATFORM_CLIENT_SECRET" -Denvironment="$DEPLOYMENT_ENV" -Dmule.env="$MULE_ENV" -Dmule.key="$MULE_KEY"
