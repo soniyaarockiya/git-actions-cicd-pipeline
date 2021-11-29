@@ -82,39 +82,37 @@ jobs:
         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::${secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP}"
         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP}" 
         
-    - name:  Set runtime properties for develop branch
-      id: set_runtime_properties_qa
+    - name:  Set runtime properties for qa branch
+#       id: set_runtime_properties_qa
       if: ${{ steps.get_branch.outputs.BRANCH_NAME == 'main' }}
       shell: bash
-#       run: |
-#         echo "::set-output name=MULE_ENV::QA/" 
-#         echo "::set-output name=MULE_KEY::mulekey//" 
-#         echo "::set-output name=DEPLOYMNET_ENV::QA// " 
-#         echo "::set-output name=BUSINESS_GROUP_ID::business group id//"
-#         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::clientid// " 
-#         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::clientsecret// " 
+      run: |
+        echo "::set-output name=MULE_ENV::QA/" 
+        echo "::set-output name=MULE_KEY::mulekey//" 
+        echo "::set-output name=DEPLOYMNET_ENV::QA// " 
+        echo "::set-output name=BUSINESS_GROUP_ID::business group id//"
+        echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::clientid// " 
+        echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::clientsecret// " 
         
 #This is another way, where values are added as github env variables but this didnt work
-      run: |
-        echo "MULE_ENV = QA " >> $GITHUB_ENV
-        echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
-        echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
-        echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
-        echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
-        echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
+#       run: |
+#         echo "MULE_ENV = QA " >> $GITHUB_ENV
+#         echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
+#         echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
+#         echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
+#         echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
+#         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
       
 
     - name: print the values
       id: print_runtime_properties
       shell: bash
       run: |
-        echo  "Values are ${{steps.set_values.outputs.ANYPOINT_PLATFORM_CLIENT_SECRET}}"
-        echo "Values are {{env.ANYPOINT_PLATFORM_CLIENT_SECRET}}"
+        echo  "Values are ${{steps.outputs.ANYPOINT_PLATFORM_CLIENT_SECRET}}"
       
 #     - name: Deploy to CloudHub
 #       env:
 #         USERNAME: ${{ secrets.username }}
 #         PASSWORD: ${{ secrets.password }}
 #       run: |
-#         artifactName=$(ls *.jar | head -1)
-#         mvn mule:deploy -Dmule.artifact=$artifactName -Danypoint.userName="$USERNAME" -Danypoint.password="$PASSWORD"
+#         echo 
