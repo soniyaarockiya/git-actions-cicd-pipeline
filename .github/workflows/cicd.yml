@@ -55,6 +55,7 @@ jobs:
     
       #     needs: build
     runs-on: ubuntu-latest
+    
     steps:    
 #     - uses: actions/checkout@v2
 #     - uses: actions/cache@v1
@@ -69,13 +70,15 @@ jobs:
         
     - name: get branch details
       shell: bash
-      
+      id: get_branch
       run: |
-        echo "BRANCH_NAME = $(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $env:GITHUB_ENV
+        echo "::set-output BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | tr / -)" 
+        
         
     - name: print env
       shell: bash
-      run: echo ${{env.BRANCH_NAME}}
+      id: print_env
+      run: echo ${{ steps.get_branch.outputs.BRANCH_NAME }}
 
       
       
