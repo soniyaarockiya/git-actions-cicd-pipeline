@@ -91,7 +91,7 @@ jobs:
         
     - name: Set runtime properties for QA branch
 
-      if: ${{ env.BRANCH_NUAME == 'main' }}
+      if: ${{ env.BRANCH_NAME == 'main' }}
       shell: bash
 
 #       run: |
