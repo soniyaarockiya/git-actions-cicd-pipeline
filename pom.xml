@@ -54,7 +54,7 @@
 						<environment>${environment}</environment>
 
 
-						<applicationName>test-ci-cd</applicationName>
+						<applicationName>test-ci-cd-2</applicationName>
 						<environment>${environment}</environment>
 						<region>us-east-2</region>
 						<workers>1</workers>
