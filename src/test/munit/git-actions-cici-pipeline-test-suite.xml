@@ -13,7 +13,7 @@
 			<flow-ref doc:name="Flow-ref to git-actions-cici-pipelineFlow" doc:id="f1957c57-556a-48c1-8ef1-3391e33ca091" name="git-actions-cici-pipelineFlow"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert-equals doc:name="Assert equals" doc:id="5701372b-97ba-4d5a-a51d-f4e3be577b15" actual='#[payload]' expected='#["hello world"]' message='#["Status code did not match to 200"]'/>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="5701372b-97ba-4d5a-a51d-f4e3be577b15" actual='#[payload]' expected='#["hello world Soniya"]' message='#["Status code did not match to 200"]'/>
 		</munit:validation>
 	</munit:test>
 
