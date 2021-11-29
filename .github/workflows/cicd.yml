@@ -75,7 +75,7 @@ jobs:
         
     - name: print env
       shell: bash
-      run: echo "ENVIRONMENT IS .... ${{env.BRANCH_NAME}}"
+      run: echo $BRANCH_NAME
 
       
       
