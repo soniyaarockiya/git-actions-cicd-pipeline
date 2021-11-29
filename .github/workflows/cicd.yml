@@ -118,4 +118,4 @@ jobs:
         ANYPOINT_PLATFORM_CLIENT_SECRET: ${{steps.set_runtime_properties_dev.outputs.ANYPOINT_PLATFORM_CLIENT_ID}}
       run: |
          artifactName=$(ls *.jar | head -1)
-          mvn mule:deploy -Dmule.artifact=$artifactName -Dusername="$USERNAME" -Dpassword="$PASSWORD" -DbusinessgroupId="$BUSINESS_GROUP_ID" -Danypoint.platform.client_id="$ANYPOINT_PLATFORM_CLIENT_ID" -Danypoint.platform.client_secret="$ANYPOINT_PLATFORM_CLIENT_SECRET" -Denvironment="$DEPLOYMENT_ENV" -Dmule.env="$MULE_ENV" -Dmule.key="$MULE_KEY"
+          mvn deploy -Dmule.artifact=$artifactName -Dusername="$USERNAME" -Dpassword="$PASSWORD" -DbusinessgroupId="$BUSINESS_GROUP_ID" -Danypoint.platform.client_id="$ANYPOINT_PLATFORM_CLIENT_ID" -Danypoint.platform.client_secret="$ANYPOINT_PLATFORM_CLIENT_SECRET" -Denvironment="$DEPLOYMENT_ENV" -Dmule.env="$MULE_ENV" -Dmule.key="$MULE_KEY"
