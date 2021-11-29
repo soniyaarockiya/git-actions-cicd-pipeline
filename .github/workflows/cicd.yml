@@ -84,7 +84,7 @@ jobs:
         
     - name:  Set runtime properties for qa branch
 #       id: set_runtime_properties_qa
-      if: ${{ steps.get_branch.outputs.BRANCH_NAME == 'main' }}
+      if: ${{ steps.get_branch_name.outputs.BRANCH_NAME == 'main' }}
       shell: bash
       run: |
         echo "::set-output name=MULE_ENV::QA/" 
