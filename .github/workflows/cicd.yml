@@ -9,6 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  
 #   build:
 #     runs-on: ubuntu-latest
 #     steps:
@@ -43,6 +44,13 @@ jobs:
 #           path: target/*.jar
 
   deploy:
+    outputs:
+      MULE_KEY: ${{env.MULE_KEY}}
+      DEPLOYMNET_ENV : ${{env.DEPLOYMNET_ENV}}
+      BUSINESS_GROUP_ID: ${{env.BUSINESS_GROUP_ID}}
+      ANYPOINT_PLATFORM_CLIENT_ID: ${{env.ANYPOINT_PLATFORM_CLIENT_ID}}
+      ANYPOINT_PLATFORM_CLIENT_SECRET: ${{env.ANYPOINT_PLATFORM_CLIENT_SECRET}}
+
     env:
       BRANCH_NUAME: main
       #     needs: build
