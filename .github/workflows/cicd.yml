@@ -44,18 +44,8 @@ jobs:
 #           path: target/*.jar
 
   deploy:
-    outputs:
-      MULE_KEY: ${{env.MULE_KEY}}
-      DEPLOYMNET_ENV : ${{env.DEPLOYMNET_ENV}}
-      BUSINESS_GROUP_ID: ${{env.BUSINESS_GROUP_ID}}
-      ANYPOINT_PLATFORM_CLIENT_ID: ${{env.ANYPOINT_PLATFORM_CLIENT_ID}}
-      ANYPOINT_PLATFORM_CLIENT_SECRET: ${{env.ANYPOINT_PLATFORM_CLIENT_SECRET}}
-      BRANCH_NAME: ${{env.BRANCH_NAME}}
-
-    
       #     needs: build
     runs-on: ubuntu-latest
-    
     steps:    
 #     - uses: actions/checkout@v2
 #     - uses: actions/cache@v1
@@ -83,7 +73,7 @@ jobs:
       
       
     - name: Set runtime properties for develop branch
-      if: ${{ env.BRANCH_NAME == 'develop' }}
+      if: ${{ steps.get_branch.outputs.BRANCH_NAME == 'develop' }}
       run: |
         echo "MULE_ENV = DEV " >> $GITHUB_ENV
         echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
@@ -94,7 +84,7 @@ jobs:
         
     - name: Set runtime properties for QA branch
 
-      if: ${{ env.BRANCH_NAME == 'main' }}
+      if: ${{ steps.get_branch.outputs.BRANCH_NAME == 'main' }}
       shell: bash
 
 #       run: |
