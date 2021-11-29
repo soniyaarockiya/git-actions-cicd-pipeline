@@ -79,8 +79,8 @@ jobs:
         echo "::set-output name=MULE_KEY::${{secrets.MULE_KEY}}" 
         echo "::set-output name=DEPLOYMENT_ENV::Sandbox" 
         echo "::set-output name=BUSINESS_GROUP_ID::${{secrets.BUSINESS_GROUP_ID}}"
-        echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::${secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP}"
-        echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP}" 
+        echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::${{secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP}}"
+        echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP}}" 
         
     - name:  Set runtime properties for qa branch
       id: set_runtime_properties_qa
