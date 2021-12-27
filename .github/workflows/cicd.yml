@@ -77,13 +77,13 @@ jobs:
       run: |
         echo "MULE_ENV = QA " >> $GITHUB_ENV
         echo "MULE_KEY = lol " >> $GITHUB_ENV
-        echo "DEPLOYMENT_ENV = $(echo 'DEV')" >> $GITHUB_ENV
+        echo "DEPLOYMENT_ENV=$(echo "DEV")" >> $GITHUB_ENV
         
     - name: Print
       shell: bash 
       run: | 
-         echo $MULE_ENV 
-         echo $DEPLOYMENT_ENV
+         echo "$MULE_ENV"
+         echo "$DEPLOYMENT_ENV"
          echo ${{env.DEPLOYMENT_ENV}}
 
 
