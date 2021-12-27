@@ -92,8 +92,9 @@ jobs:
 #          echo "$DEPLOYMENT_ENV"
 #          echo ${{env.DEPLOYMENT_ENV}}
          
-    - name: deploy
+    - name: deploy something
       shell: bash
+      run: echo hello
       env: 
         branch : ${{env.BRANCH_NAME}}
         
