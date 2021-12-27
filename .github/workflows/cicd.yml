@@ -64,7 +64,7 @@ jobs:
 #       run: |
 #         echo "::set-output name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | tr / -)" 
       run: |
-          echo "BRANCH_NAME = $(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)">> $GITHUB_ENV
         
         
     - name: Print branch name
@@ -73,7 +73,7 @@ jobs:
 #       run: echo ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
       run: | 
         echo ${{env.BRANCH_NAME}}
-        echo $BRANCH_NAME
+        echo "$BRANCH_NAME"
 
       
       
