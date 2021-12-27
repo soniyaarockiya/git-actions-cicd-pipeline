@@ -93,6 +93,7 @@ jobs:
 #          echo ${{env.DEPLOYMENT_ENV}}
          
     - name: deploy
+      shell: bash
       env: 
         branch : ${{env.BRANCH_NAME}}
         
