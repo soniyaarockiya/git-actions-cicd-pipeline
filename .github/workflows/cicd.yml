@@ -61,14 +61,20 @@ jobs:
     - name: Get branch name
       shell: bash
       id: get_branch_name
+#       run: |
+#         echo "::set-output name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | tr / -)" 
       run: |
-        echo "::set-output name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | tr / -)" 
+          echo "BRANCH_NAME = $(echo ${GITHUB_REF#refs/heads/} | tr / -)"
         
         
     - name: Print branch name
       shell: bash
       id: print_branch_name
-      run: echo ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
+#       run: echo ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
+      run: | 
+        echo "${{BRANCH_NAME}}"
+        echo "${{env.BRANCH_NAME}}"
+
       
       
     - name: trial
@@ -85,6 +91,12 @@ jobs:
          echo "$MULE_ENV"
          echo "$DEPLOYMENT_ENV"
          echo ${{env.DEPLOYMENT_ENV}}
+         
+    - name: deploy
+      env: 
+        branch : ${{env.BRANCH_NAME}}
+        
+   
 
 
 
