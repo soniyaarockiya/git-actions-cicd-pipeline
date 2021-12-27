@@ -72,7 +72,7 @@ jobs:
       id: print_branch_name
 #       run: echo ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
       run: | 
-        echo "${{env.BRANCH_NAME}}"
+        echo ${{env.BRANCH_NAME}}
 
       
       
