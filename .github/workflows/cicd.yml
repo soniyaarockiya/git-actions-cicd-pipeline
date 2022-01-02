@@ -30,111 +30,60 @@ jobs:
     - name: Test Coverage
       run: mvn -B test --file pom.xml
       
-#     - name: Package 
-#       run: mvn -B package --file pom.xml
-#     - name: Stamp artifact file name with commit hash
-#       run: |
-#         artifactName1=$(ls target/*.jar | head -1)
-#         commitHash=$(git rev-parse --short "$GITHUB_SHA")
-#         artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/.$commitHash.jar/g")
-#         mv $artifactName1 $artifactName2
-#     - uses: actions/upload-artifact@master
-#       with:
-#           name: artifacts
-#           path: target/*.jar
+    - name: Package 
+      run: mvn -B package --file pom.xml
+    - name: Stamp artifact file name with commit hash
+      run: |
+        artifactName1=$(ls target/*.jar | head -1)
+        commitHash=$(git rev-parse --short "$GITHUB_SHA")
+        artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/.$commitHash.jar/g")
+        mv $artifactName1 $artifactName2
+    - uses: actions/upload-artifact@master
+      with:
+          name: artifacts
+          path: target/*.jar
 
-#   deploy:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:    
-#     - uses: actions/checkout@v2
-#     - uses: actions/cache@v1
-#       with:
-#         path: ~/.m2/repository
-#         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-#         restore-keys: |
-#           ${{ runner.os }}-maven-
-#     - uses: actions/download-artifact@master
-#       with:
-#         name: artifacts
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:    
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - uses: actions/download-artifact@master
+      with:
+        name: artifacts
         
     - name: Get branch name
       shell: bash
       id: get_branch_name
-#       run: |
-#         echo "::set-output name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | tr / -)" 
       run: |
-          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)">> $GITHUB_ENV
+          echo "BRANCH_NAME=$(echo${GITHUB_REF#refs/heads/} | tr / -)">> $GITHUB_ENV
         
         
     - name: Print branch name
       shell: bash
       id: print_branch_name
-#       run: echo ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
       run: | 
         echo ${{env.BRANCH_NAME}}
         echo "$BRANCH_NAME"
-
-      
-      
-    - name: trial
-      shell : bash
-      id: something
-      run: |
-        echo "MULE_ENV = QA " >> $GITHUB_ENV
-        echo "MULE_KEY = lol " >> $GITHUB_ENV
-        echo "DEPLOYMENT_ENV=$(echo "DEV")" >> $GITHUB_ENV
         
-    - name: Print
-      shell: bash 
-      run: | 
-         echo "$MULE_ENV"
-         echo "$DEPLOYMENT_ENV"
-         echo ${{env.DEPLOYMENT_ENV}}
-         
-    - name: deploy something
-      shell: bash
-      run: echo hello
-      env: 
-        branch : ${{env.BRANCH_NAME}}
-        
-   
-
-
-
- 
  
 #     - name: Set runtime properties for develop branch
 #       id: set_runtime_properties_dev
-#       if: ${{ steps.get_branch_name.outputs.BRANCH_NAME == 'develop' }}
+#       if: ${{ env.BRANCH_NAME == 'develop' }}
+#       # This is another way, where values are added as github env variables but this didnt work
 #       run: |
-#         echo "::set-output name=MULE_ENV::DEV"
-#         echo "::set-output name=MULE_KEY::${{secrets.MULE_KEY}}" 
-#         echo "::set-output name=DEPLOYMENT_ENV::Sandbox" 
-#         echo "::set-output name=BUSINESS_GROUP_ID::${{secrets.BUSINESS_GROUP_ID}}"
-#         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::${{secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP}}"
-#         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP}}" 
-        
-#     - name:  Set runtime properties for qa branch
-#       id: set_runtime_properties_qa
-#       if: ${{ steps.get_branch_name.outputs.BRANCH_NAME == 'main' }}
-#       shell: bash
-#       run: |
-#         echo "::set-output name=MULE_ENV::QA/" 
-#         echo "::set-output name=MULE_KEY::mulekey//" 
-#         echo "::set-output name=DEPLOYMENT_ENV::QA// " 
-#         echo "::set-output name=BUSINESS_GROUP_ID::business group id//"
-#         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_ID::clientid// " 
-#         echo "::set-output name=ANYPOINT_PLATFORM_CLIENT_SECRET::clientsecret// " 
-        
-# #This is another way, where values are added as github env variables but this didnt work
-# #       run: |
-# #         echo "MULE_ENV = QA " >> $GITHUB_ENV
-# #         echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
-# #         echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
-# #         echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
-# #         echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
-# #         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
+#         echo "MULE_ENV = QA " >> $GITHUB_ENV
+#         echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
+#         echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
+#         echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
+#         echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
+#         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
       
 
       
