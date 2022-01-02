@@ -80,6 +80,15 @@ jobs:
       run: |
         echo "MULE_ENV=$(echo "QA")">> $GITHUB_ENV
         echo "MULE_KEY=$(echo ${{secrets.MULE_KEY}})">> $GITHUB_ENV
+      
+        
+    - name: Print env variables 
+      shell: bash
+      id: print_env_vars
+      run: | 
+        echo ${{env.MULE_ENV}}
+        echo ${{env.MULE_KEY}}
+
         
 
       
