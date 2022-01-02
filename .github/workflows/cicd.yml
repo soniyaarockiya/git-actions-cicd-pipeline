@@ -73,17 +73,17 @@ jobs:
         echo "$BRANCH_NAME"
         
  
-#     - name: Set runtime properties for develop branch
-#       id: set_runtime_properties_dev
-#       if: ${{ env.BRANCH_NAME == 'develop' }}
-#       # This is another way, where values are added as github env variables but this didnt work
-#       run: |
-#         echo "MULE_ENV = QA " >> $GITHUB_ENV
-#         echo "MULE_KEY = ${{secrets.MULE_KEY}} " >> $GITHUB_ENV
-#         echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
-#         echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
-#         echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
-#         echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
+    - name: Set runtime properties for develop branch
+      id: set_runtime_properties_dev
+      if: ${{ env.BRANCH_NAME == 'develop' }}
+      # This is another way, where values are added as github env variables but this didnt work
+      run: |
+        echo "MULE_ENV=$(echo "QA")">> $GITHUB_ENV
+        echo "MULE_KEY=$(echo ${{secrets.MULE_KEY}})">> $GITHUB_ENV
+        echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
+        echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
       
 
       
