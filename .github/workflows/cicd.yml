@@ -80,11 +80,7 @@ jobs:
       run: |
         echo "MULE_ENV=$(echo "QA")">> $GITHUB_ENV
         echo "MULE_KEY=$(echo ${{secrets.MULE_KEY}})">> $GITHUB_ENV
-        echo "DEPLOYMNET_ENV = QA " >> $GITHUB_ENV
-        echo "BUSINESS_GROUP_ID = ${{secrets.BUSINESS_GROUP_ID}}" >> $GITHUB_ENV
-        echo "ANYPOINT_PLATFORM_CLIENT_ID = ${secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA} " >> $GITHUB_ENV
-        echo "ANYPOINT_PLATFORM_CLIENT_SECRET = ${secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA} " >> $GITHUB_ENV
-      
+        
 
       
 #     - name: Deploy to CloudHub
