@@ -78,31 +78,46 @@ jobs:
       if: ${{ env.BRANCH_NAME == 'develop' }}
       # This is another way, where values are added as github env variables but this didnt work
       run: |
+        echo "MULE_ENV=$(echo "DEV")">> $GITHUB_ENV
+        echo "MULE_KEY=$(echo ${{secrets.MULE_KEY}})">> $GITHUB_ENV
+        echo "DEPLOYMENT_ENV=$(echo "Development")">> $GITHUB_ENV
+        echo "BUSINESS_GROUP_ID=$(echo ${{secrets.BUSINESS_GROUP_ID}})">> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_ID=$(echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID_DEVELOP}})">> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_SECRET=$(echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_DEVELOP}})">> $GITHUB_ENV
+        
+    - name: Set runtime properties for develop branch
+      id: set_runtime_properties_qa
+      if: ${{ env.BRANCH_NAME == 'qa' }}
+      run: |
         echo "MULE_ENV=$(echo "QA")">> $GITHUB_ENV
         echo "MULE_KEY=$(echo ${{secrets.MULE_KEY}})">> $GITHUB_ENV
-      
-        
-    - name: Print env variables 
-      shell: bash
-      id: print_env_vars
-      run: | 
-        echo ${{env.MULE_ENV}}
-        echo ${{env.MULE_KEY}}
+        echo "DEPLOYMENT_ENV=$(echo "QA")">> $GITHUB_ENV
+        echo "BUSINESS_GROUP_ID=$(echo ${{secrets.BUSINESS_GROUP_ID}})">> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_ID=$(echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID_QA}})">> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_SECRET=$(echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_QA}})">> $GITHUB_ENV
 
-        
-
+    - name: Set runtime properties for develop branch
+      id: set_runtime_properties_main
+      if: ${{ env.BRANCH_NAME == 'main' }}
+      run: |
+        echo "MULE_ENV=$(echo "PROD")">> $GITHUB_ENV
+        echo "MULE_KEY=$(echo ${{secrets.MULE_KEY}})">> $GITHUB_ENV
+        echo "DEPLOYMENT_ENV=$(echo "Production")">> $GITHUB_ENV
+        echo "BUSINESS_GROUP_ID=$(echo ${{secrets.BUSINESS_GROUP_ID}})">> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_ID=$(echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID_PROD}})">> $GITHUB_ENV
+        echo "ANYPOINT_PLATFORM_CLIENT_SECRET=$(echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET_PROD}})">> $GITHUB_ENV
       
-#     - name: Deploy to CloudHub
-#       if: ${{ steps.get_branch_name.outputs.BRANCH_NAME == 'develop' }}
-#       env:
-#         USERNAME: ${{ secrets.username }}
-#         PASSWORD: ${{ secrets.password }}
-#         MULE_ENV: ${{steps.set_runtime_properties_dev.outputs.MULE_ENV}}
-#         MULE_KEY: ${{steps.set_runtime_properties_dev.outputs.MULE_KEY}}
-#         DEPLOYMENT_ENV: ${{steps.set_runtime_properties_dev.outputs.DEPLOYMENT_ENV}}
-#         BUSINESS_GROUP_ID: ${{steps.set_runtime_properties_dev.outputs.BUSINESS_GROUP_ID}}
-#         ANYPOINT_PLATFORM_CLIENT_ID: ${{steps.set_runtime_properties_dev.outputs.ANYPOINT_PLATFORM_CLIENT_ID}}
-#         ANYPOINT_PLATFORM_CLIENT_SECRET: ${{steps.set_runtime_properties_dev.outputs.ANYPOINT_PLATFORM_CLIENT_ID}}
-#       run: |
-#          artifactName=$(ls *.jar | head -1)
-#           mvn mule:deploy -Dmule.artifact=$artifactName -Dusername="$USERNAME" -Dpassword="$PASSWORD" -DbusinessgroupId="$BUSINESS_GROUP_ID" -Danypoint.platform.client_id="$ANYPOINT_PLATFORM_CLIENT_ID" -Danypoint.platform.client_secret="$ANYPOINT_PLATFORM_CLIENT_SECRET" -Denvironment="$DEPLOYMENT_ENV" -Dmule.env="$MULE_ENV" -Dmule.key="$MULE_KEY"
+    - name: Deploy to CloudHub
+      if: ${{ steps.get_branch_name.outputs.BRANCH_NAME == 'develop' }}
+      env:
+        USERNAME: ${{ secrets.username }}
+        PASSWORD: ${{ secrets.password }}
+        MULE_ENV: ${{env.MULE_ENV}}
+        MULE_KEY: ${{env.MULE_KEY}}
+        DEPLOYMENT_ENV: ${{env.DEPLOYMENT_ENV}}
+        BUSINESS_GROUP_ID: ${{env.BUSINESS_GROUP_ID}}
+        ANYPOINT_PLATFORM_CLIENT_ID: ${{env.ANYPOINT_PLATFORM_CLIENT_ID}}
+        ANYPOINT_PLATFORM_CLIENT_SECRET: ${{env.ANYPOINT_PLATFORM_CLIENT_ID}}
+      run: |
+         artifactName=$(ls *.jar | head -1)
+          mvn mule:deploy -Dmule.artifact=$artifactName -Dusername="$USERNAME" -Dpassword="$PASSWORD" -DbusinessgroupId="$BUSINESS_GROUP_ID" -Danypoint.platform.client_id="$ANYPOINT_PLATFORM_CLIENT_ID" -Danypoint.platform.client_secret="$ANYPOINT_PLATFORM_CLIENT_SECRET" -Denvironment="$DEPLOYMENT_ENV" -Dmule.env="$MULE_ENV" -Dmule.key="$MULE_KEY"
