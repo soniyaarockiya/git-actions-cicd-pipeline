@@ -62,7 +62,7 @@ jobs:
       shell: bash
       id: get_branch_name
       run: |
-          echo "BRANCH_NAME=$(echo${GITHUB_REF#refs/heads/} | tr / -)">> $GITHUB_ENV
+          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)">> $GITHUB_ENV
         
         
     - name: Print branch name
